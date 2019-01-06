@@ -9,7 +9,7 @@
 
 
 namespace mydesign {
-	
+
 	class Observer;
 	class EventData
 	{
@@ -35,8 +35,8 @@ namespace mydesign {
 		~Publisher();
 
     	void raise(const std::string& eventName, std::shared_ptr<EventData>) const;
-        void registerEvent(const std::string& eventName);
-		void registerEvents(const std::vector<std::string>& eventNames);
+      void registerEvent(const std::string& eventName);
+		  void registerEvents(const std::vector<std::string>& eventNames);
 
 	private:
 		std::unique_ptr<PublisherImpl> publisherImpl_;

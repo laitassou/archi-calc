@@ -14,7 +14,7 @@ set (CMAKE_BUILD_TYPE Debug)
 set (CMAKE_CXX_STANDARD 14)
 
 
-include_directories(../utility)
+include_directories(../)
 
 
 include_directories(include)

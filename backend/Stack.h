@@ -16,7 +16,6 @@ public:
     static const char* Message(ErrorConditions ec);
     const char* message() const;
     ErrorConditions error() const { return err_; }
-
 private:
     ErrorConditions err_;
 };

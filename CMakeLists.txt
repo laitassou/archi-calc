@@ -12,7 +12,7 @@ set (CMAKE_BUILD_TYPE Debug)
 
 set (CMAKE_CXX_STANDARD 14)
 
-include_directories(include)
+include_directories(./)
 
 set(SOURCES app/main.cpp)
 
@@ -20,5 +20,8 @@ set(SOURCES app/main.cpp)
 ADD_SUBDIRECTORY(utility)
 
 ADD_SUBDIRECTORY(backend)
+
+
+ADD_SUBDIRECTORY(ui)
 
 add_executable(calc ${SOURCES})
