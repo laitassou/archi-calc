@@ -1,8 +1,8 @@
 #include <iostream>
 #include <memory>
 #include "ui/Cli.h"
-////#include "backend/CommandDispatcher.h"
-//#include "backend/AppObservers.h"
+#include "backend/CommandDispatcher.h"
+#include "backend/AppObservers.h"
 #include "backend/Stack.h"
 //#include "backend/CoreCommands.h"
 

@@ -13,7 +13,7 @@ namespace mydesign {
  class Command
  {
     public:
-         virtual ~ Command();
+         virtual ~ Command() {};
       	 void execute();
       	 void undo();
       	 Command * clone () const;
@@ -124,7 +124,40 @@ private:
     PluginCommand* cloneImpl() const override final;
 };
 
+// This shows an entirely different design using function and lambdas.
+class BinaryCommandAlternative final : public Command
+{
+    using BinaryCommandOp = double(double, double);
+public:
+    BinaryCommandAlternative(const std::string& help, std::function<BinaryCommandOp> f);
+    ~BinaryCommandAlternative() = default;
 
+private:
+    BinaryCommandAlternative(BinaryCommandAlternative&&) = delete;
+    BinaryCommandAlternative& operator=(const BinaryCommandAlternative&) = delete;
+    BinaryCommandAlternative& operator=(BinaryCommandAlternative&&) = delete;
+
+    // throws an exception if the stack size is less than two
+    void checkPreconditionsImpl() const override;
+
+    BinaryCommandAlternative(const BinaryCommandAlternative&);
+
+    const char* helpMessageImpl() const noexcept override;
+
+    // takes two elements from the stack, applies the binary operation
+    // and returns the result to the stack
+    void executeImpl() noexcept override;
+
+    // drops the result and returns the original two numbers to the stack
+    void undoImpl() noexcept override;
+
+    BinaryCommandAlternative* cloneImpl() const override;
+
+    double top_;
+    double next_;
+    std::string helpMsg_;
+    std::function<BinaryCommandOp> command_;
+};
 
 inline void CommandDeleter(Command* p)
 {

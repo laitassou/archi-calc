@@ -18,10 +18,13 @@ set(SOURCES app/main.cpp)
 
 
 ADD_SUBDIRECTORY(utility)
-
 ADD_SUBDIRECTORY(backend)
-
-
 ADD_SUBDIRECTORY(ui)
 
+
+
+link_directories(./ui ./utility ./backend)
+
 add_executable(calc ${SOURCES})
+
+target_link_libraries(calc ui utility backend)

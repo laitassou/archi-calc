@@ -19,4 +19,4 @@ include_directories(../)
 
 include_directories(include)
 
-add_library(backend SHARED  Command.cpp Stack.cpp)
+add_library(backend SHARED  Command.cpp Stack.cpp CommandDispatcher.cpp AppObservers.cpp CoreCommands.cpp CommandRepository.cpp CommandManager.cpp StoredProcedure.cpp)

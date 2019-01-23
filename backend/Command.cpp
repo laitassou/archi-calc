@@ -1,6 +1,6 @@
 #include "Command.h"
 #include "Stack.h"
-#include "Exception.h"
+#include "utility/Exception.h"
 
 
 namespace mydesign
@@ -133,6 +133,54 @@ PluginCommand *PluginCommand::cloneImpl() const
     else return p;
 }
 
+BinaryCommandAlternative::BinaryCommandAlternative(const std::string& help, std::function<BinaryCommandAlternative::BinaryCommandOp> f)
+: helpMsg_{help}
+, command_{f}
+{ }
+
+void BinaryCommandAlternative::checkPreconditionsImpl() const
+{
+    if( Stack::Instance().size() < 2 )
+        throw Exception{"Stack must have 2 elements"};
+}
+
+BinaryCommandAlternative::BinaryCommandAlternative(const BinaryCommandAlternative& rhs)
+: Command{rhs}
+, top_{rhs.top_}
+, next_{rhs.next_}
+, helpMsg_{rhs.helpMsg_}
+, command_{rhs.command_}
+{ }
+
+const char *BinaryCommandAlternative::helpMessageImpl() const noexcept
+{
+    return helpMsg_.c_str();
+}
+
+BinaryCommandAlternative* BinaryCommandAlternative::cloneImpl() const
+{
+    return new BinaryCommandAlternative{*this};
+}
+
+void BinaryCommandAlternative::executeImpl() noexcept
+{
+    // suppress change signal so only one event raised for the execute
+    top_ = Stack::Instance().pop(true);
+    next_ = Stack::Instance().pop(true);
+    Stack::Instance().push( command_(next_, top_) );
+
+    return;
+}
+
+void BinaryCommandAlternative::undoImpl() noexcept
+{
+    // suppress change signal so only one event raised for the execute
+    Stack::Instance().pop(true);
+    Stack::Instance().push(next_, true);
+    Stack::Instance().push(top_);
+
+    return;
+}
 
 
 

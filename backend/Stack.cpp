@@ -27,8 +27,6 @@ namespace mydesign {
 const string Stack::StackChanged = "stackChanged";
 const string Stack::StackError = "error";
 
- const string PDCALC_VERSION ="v1.0";
-
 
 const char* StackEventData::Message(StackEventData::ErrorConditions ec)
 {
