@@ -4,7 +4,7 @@
 #include "backend/CommandDispatcher.h"
 #include "backend/AppObservers.h"
 #include "backend/Stack.h"
-//#include "backend/CoreCommands.h"
+#include "backend/CoreCommands.h"
 
 // I usually don't make blanket using namespace statements, but this
 // example is meant to be simple.
@@ -29,10 +29,11 @@ int main(int arc, char ** arv)
 		Cli cli{std::cin, std::cout};
 
 		CommandDispatcher ce{cli};
+		RegisterCoreCommands(cli);
 	  cli.attach(UserInterface::CommandEntered, make_unique<CommandIssuedObserver>(ce) );
-
 	  Stack::Instance().attach(Stack::StackChanged, make_unique<StackUpdatedObserver>(cli) );
- 		cli.execute();
+
+ 		cli.execute(true,false);
 /*
  showmessage();
 
